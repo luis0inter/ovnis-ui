@@ -1,32 +1,38 @@
-# React + TypeScript + Vite
+# jwt-auth-web
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + Vite frontend for `jwt-internal-service-api`.
 
-Currently, two official plugins are available:
+## Run it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Start the backend (`docker compose up -d`, then `./mvnw spring-boot:run`) on port 8080.
+2. In this folder:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev          # start the dev server
+npm run typecheck    # check types without building
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+3. Open http://localhost:5173
+
+In development, Vite proxies every `/api` request to `http://localhost:8080`, so no CORS setup
+is needed on the backend. For production you'll need to either serve the built `dist/` folder
+from the same origin as the API (e.g. behind one reverse proxy), or add a CORS config to the backend.
+
+## Routes
+
+| Path                                           | Who can open it  | Everyone else is sent to         |
+|------------------------------------------------|------------------|----------------------------------|
+| `/login`, `/register`                          | Logged-out users | their home page                  |
+| `/user`, `/user/profile`, `/user/settings`     | `USER` only      | `/login`, or `/admin` for admins |
+| `/admin`, `/admin/users`, `/admin/settings`    | `ADMIN` only     | `/login`, or `/user` for users   |
+
+## Where things live
+
+- `src/App.tsx` - the route tree, including the nested routes and nav links
+- `../../../../Escuela/Desarrollo Web/ovnis-ui/src/components` - header and nav shared by the nested pages (`<Outlet />`)
+- `../../../../Escuela/Desarrollo Web/ovnis-ui/src/pages`, `../../../../Escuela/Desarrollo Web/ovnis-ui/src/pages` - one file per page
+- `../../../../Escuela/Desarrollo Web/ovnis-ui/src/auth` - `RequireRole`, `PublicOnly`, and `homeFor(role)`
+- `../../../../Escuela/Desarrollo Web/ovnis-ui/src/auth` - login, register, logout, and `authFetch` for protected calls
+- `src/api.ts` - the fetch wrapper
+- `types.ts` - types that mirror the backend DTOs
