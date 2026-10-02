@@ -6,7 +6,7 @@ import { readToken } from './jwt.ts'
 interface AuthValue {
   user: User | null
   login: (username: string, password: string) => Promise<void>
-  register: (username: string, password: string) => Promise<void>
+  register: (username: string, email: string, password: string) => Promise<void>
   logout: () => void
   authFetch: <T>(path: string) => Promise<T>
 }
@@ -38,8 +38,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     saveToken(res.accessToken)
   }
 
-  async function register(username: string, password: string) {
-    await api('/api/auth/register', { method: 'POST', body: { username, password } })
+  async function register(username: string, email: string, password: string) {
+    await api('/api/auth/register', { method: 'POST', body: { username, email, password } })
     await login(username, password)
   }
 
