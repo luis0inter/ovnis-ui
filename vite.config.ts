@@ -7,7 +7,14 @@ export default defineConfig({
     // Forward /api calls to the Spring Boot backend during development.
     // This avoids CORS entirely, since the browser only ever talks to Vite.
     proxy: {
-      '/api': 'http://localhost:8080',
+      '/api': {
+        target: 'http://localhost:8080',
+        configure: (proxy) => {
+          proxy.on('proxyRes', (proxyRes) => {
+            delete proxyRes.headers['www-authenticate']
+          })
+        },
+      },
     },
   },
 })
