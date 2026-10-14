@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router'
+import { NavLink, Outlet, useLocation } from 'react-router'
 import { useAuth } from '../auth/AuthContext.tsx'
 
 interface Props {
@@ -7,10 +7,12 @@ interface Props {
 
 export default function Layout({ links }: Props) {
   const { user, logout } = useAuth()
+  const location = useLocation()
+  const isUserHome = links[0]?.to === '/user' && location.pathname === '/user'
 
   return (
     <>
-      <header className="header">
+      <header className={`header${isUserHome ? ' user-home-layout-header' : ''}`}>
         <strong>Internal Access</strong>
         <nav>
           {links.map((link) => (
@@ -25,7 +27,7 @@ export default function Layout({ links }: Props) {
           <button className="secondary" onClick={logout}>Log out</button>
         </div>
       </header>
-      <main className="main">
+      <main className={`main${isUserHome ? ' user-home-layout-main' : ''}`}>
         <Outlet />
       </main>
     </>
