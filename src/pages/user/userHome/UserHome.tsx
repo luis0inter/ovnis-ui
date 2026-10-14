@@ -1,6 +1,6 @@
 import { ArrowRight, CirclePlay, LogOut, Plus, Search } from 'lucide-react'
 import { Link, NavLink } from 'react-router'
-import { useAuth } from '../../auth/AuthContext.tsx'
+import { useAuth } from '../../../auth/AuthContext.tsx'
 import './UserHome.css'
 
 export default function UserHome() {
