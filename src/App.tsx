@@ -31,7 +31,7 @@ export default function App() {
       </Route>
 
       <Route element={<RequireRole role="USER" />}>
-        <Route path="/user" element={<Layout links={userLinks} />}>
+        <Route path="/user" element={<UserHome />}>
           <Route index element={<UserHome />} />
           <Route path="profile" element={<UserProfile />} />
           <Route path="settings" element={<UserSettings />} />
