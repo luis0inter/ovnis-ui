@@ -1,37 +1,14 @@
-import { ArrowRight, CirclePlay, LogOut, Plus, Search } from 'lucide-react'
-import { Link, NavLink } from 'react-router'
+import { ArrowRight, CirclePlay, Plus, Search } from 'lucide-react'
+import { Link} from 'react-router'
 import { useAuth } from '../../../auth/AuthContext.tsx'
 import './UserHome.css'
 
-export default function UserHome() {
-  const { user, logout } = useAuth()
 
+export default function UserHome() {
+  const { user} = useAuth()
   return (
     <div className="user-home">
-      <header className="uh-header">
-        <Link className="uh-brand" to="/user" aria-label="OVNIS, inicio">
-          <span className="uh-logo" aria-hidden="true"><span /></span>
-          <span className="uh-brand-name">OVNIS</span>
-        </Link>
 
-        <nav className="uh-nav" aria-label="Navegación principal">
-          <NavLink to="/user" end>Inicio</NavLink>
-          <NavLink to="/user/profile">Perfil</NavLink>
-          <NavLink to="/user/settings">Ajustes</NavLink>
-        </nav>
-
-        <div className="uh-header-actions">
-          <span className="uh-motto">La verdad está ahí fuera</span>
-          <span className="uh-divider" aria-hidden="true" />
-          <Link className="uh-icon-link" to="/user/profile" aria-label="Ir a tu perfil" title="Tu perfil">
-            <Search size={16} aria-hidden="true" />
-          </Link>
-          <button className="uh-submit" type="button" onClick={logout}>
-            <LogOut size={14} aria-hidden="true" />
-            <span>Cerrar sesión</span>
-          </button>
-        </div>
-      </header>
 
       <main>
         <section className="uh-hero" aria-labelledby="uh-title">

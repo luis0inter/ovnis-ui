@@ -53,6 +53,8 @@
 .uh-secondary-action {
   display: flex;
   align-items: center;
+  padding: 0 1.25rem;
+  text-size-adjust: 100%;
 }
 
 .uh-brand { gap: 0.8rem; flex: 0 0 220px; }

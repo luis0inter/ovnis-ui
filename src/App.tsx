@@ -9,14 +9,15 @@ import UserSettings from './pages/user/userSettings/UserSettings.tsx'
 import AdminHome from './pages/admin/AdminHome.tsx'
 import AdminUsers from './pages/admin/AdminUsers.tsx'
 import AdminSettings from './pages/admin/AdminSettings.tsx'
+import UserLayout from "./pages/user/UserLayout.tsx";
 
-const userLinks = [
+export const userLinks = [
   { to: '/user', label: 'Home' },
   { to: '/user/profile', label: 'Profile' },
   { to: '/user/settings', label: 'Settings' },
 ]
 
-const adminLinks = [
+export const adminLinks = [
   { to: '/admin', label: 'Home' },
   { to: '/admin/users', label: 'Users' },
   { to: '/admin/settings', label: 'Settings' },
@@ -31,10 +32,10 @@ export default function App() {
       </Route>
 
       <Route element={<RequireRole role="USER" />}>
-        <Route path="/user" element={<UserHome />}>
-          <Route index element={<UserHome />} />
-          <Route path="profile" element={<UserProfile />} />
-          <Route path="settings" element={<UserSettings />} />
+        <Route path="/user" element={<UserLayout/>}>
+          <Route index element={<UserHome/>}/>
+          <Route path="/user/profile" element={<UserProfile />} />
+          <Route path="/user/settings" element={<UserSettings />} />
         </Route>
       </Route>
 
