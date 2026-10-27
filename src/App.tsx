@@ -10,6 +10,7 @@ import AdminHome from './pages/admin/AdminHome.tsx'
 import AdminUsers from './pages/admin/AdminUsers.tsx'
 import AdminSettings from './pages/admin/AdminSettings.tsx'
 import UserLayout from "./pages/user/UserLayout.tsx";
+import SightingDetail from "./pages/sightings/SightingDetail.tsx";
 
 export const userLinks = [
   { to: '/user', label: 'Home' },
@@ -26,7 +27,9 @@ export const adminLinks = [
 export default function App() {
   return (
     <Routes>
+        <Route path ="/sightings/:id" element={<SightingDetail/>} />
       <Route element={<PublicOnly />}>
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Route>
