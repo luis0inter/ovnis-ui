@@ -11,23 +11,27 @@ import AdminUsers from './pages/admin/AdminUsers.tsx'
 import AdminSettings from './pages/admin/AdminSettings.tsx'
 import UserLayout from "./pages/user/UserLayout.tsx";
 import SightingDetail from "./pages/sightings/SightingDetail.tsx";
+import SightingsPage from "./pages/sightings/SightingsPage.tsx";
 
 export const userLinks = [
   { to: '/user', label: 'Home' },
   { to: '/user/profile', label: 'Profile' },
   { to: '/user/settings', label: 'Settings' },
+    { to: '/user/sightings', label: 'Sightings' },
 ]
 
 export const adminLinks = [
   { to: '/admin', label: 'Home' },
   { to: '/admin/users', label: 'Users' },
   { to: '/admin/settings', label: 'Settings' },
+    { to: '/admin/sightings', label: 'Sightings' },
 ]
 
 export default function App() {
   return (
     <Routes>
         <Route path ="/sightings/:id" element={<SightingDetail/>} />
+
       <Route element={<PublicOnly />}>
 
         <Route path="/login" element={<LoginPage />} />
@@ -37,14 +41,16 @@ export default function App() {
       <Route element={<RequireRole role="USER" />}>
         <Route path="/user" element={<UserLayout/>}>
           <Route index element={<UserHome/>}/>
-          <Route path="/user/profile" element={<UserProfile />} />
-          <Route path="/user/settings" element={<UserSettings />} />
+            <Route path ="sightings" element={<SightingsPage/>} />
+          <Route path="profile" element={<UserProfile />} />
+          <Route path="settings" element={<UserSettings />} />
         </Route>
       </Route>
 
       <Route element={<RequireRole role="ADMIN" />}>
         <Route path="/admin" element={<Layout links={adminLinks} />}>
           <Route index element={<AdminHome />} />
+            <Route path ="sightings" element={<SightingsPage/>} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>

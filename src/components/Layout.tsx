@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useLocation } from 'react-router'
 import { useAuth } from '../auth/AuthContext.tsx'
+import NavBar from "./NavBar.tsx";
 
 interface Props {
   links: { to: string; label: string }[]
@@ -28,6 +29,7 @@ export default function Layout({ links }: Props) {
         </div>
       </header>
       <main className={`main${isUserHome ? ' user-home-layout-main' : ''}`}>
+          <NavBar role="USER"/>
         <Outlet />
       </main>
     </>
