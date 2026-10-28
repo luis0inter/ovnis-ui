@@ -16,14 +16,14 @@ import SightingsPage from "./pages/sightings/SightingsPage.tsx";
 export const userLinks = [
   { to: '/user', label: 'Inicio' },
   { to: '/user/profile', label: 'Perfil' },
-  { to: '/user/settings', label: 'Ajustes' },
+  /*{ to: '/admin/settings', label: 'Ajustes' },*/
     { to: '/user/sightings', label: 'Avistamientos' },
 ]
 
 export const adminLinks = [
   { to: '/admin', label: 'Inicio' },
   { to: '/admin/users', label: 'Usuarios' },
-  { to: '/admin/settings', label: 'Ajustes' },
+  /*{ to: '/admin/settings', label: 'Ajustes' },*/
     { to: '/admin/sightings', label: 'Avistamientos' },
 ]
 
