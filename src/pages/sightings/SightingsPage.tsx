@@ -23,28 +23,7 @@ export default function SightingsPage() {
 
                         </div>
 
-                        <div className="uh-bottom-label" aria-hidden="true">SEÑAL DETECTADA · SIGUE OBSERVANDO</div>
-                        <div className="uh-stats" id="archivo">
-                            <div className="uh-stat">
-                                <span className="uh-stat-value">Observa</span>
-                                <span className="uh-stat-label">MIRA MÁS ALLÁ</span>
-                                <span className="uh-stat-line"/>
-                            </div>
-                            <div className="uh-stat">
-                                <span className="uh-stat-value">Documenta</span>
-                                <span className="uh-stat-label">CADA DETALLE CUENTA</span>
-                                <span className="uh-stat-line"/>
-                            </div>
-                            <div className="uh-stat">
-                                <span className="uh-stat-value">Comparte</span>
-                                <span className="uh-stat-label">AMPLÍA EL HORIZONTE</span>
-                                <span className="uh-stat-line"/>
-                            </div>
-                            <p className="uh-quote">
-                                “En algún lugar, algo increíble espera ser conocido.”
-                                <span>— CARL SAGAN</span>
-                            </p>
-                        </div>
+
                     </section>
 
                     <section className="uh-discovery" aria-labelledby="uh-discovery-title">
@@ -66,15 +45,7 @@ export default function SightingsPage() {
               </span>
                                 <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true"/>
                             </Link>
-                            <Link className="uh-card" to="/user/settings">
-                                <span className="uh-card-icon"><Plus size={18} aria-hidden="true"/></span>
-                                <span className="uh-card-content">
-                <span className="uh-card-label">02 / PREFERENCIAS</span>
-                <strong>Ajustes de cuenta</strong>
-                <span>Administra tus preferencias y acceso.</span>
-              </span>
-                                <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true"/>
-                            </Link>
+
                         </div>
                     </section>
                 </main>
