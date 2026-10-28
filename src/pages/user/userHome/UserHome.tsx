@@ -1,7 +1,7 @@
 import { ArrowRight, CirclePlay, Plus, Search } from 'lucide-react'
 import { Link} from 'react-router'
 import { useAuth } from '../../../auth/AuthContext.tsx'
-import './UserHome.css'
+import '../../../styles/UserHome.css'
 
 
 export default function UserHome() {

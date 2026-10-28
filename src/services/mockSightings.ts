@@ -9,8 +9,8 @@ export const MOCK_SIGNTHINGS: Sighting [] = [
     // Exactly what Nico's entity returns today
     { id: 2, title: 'Objeto silencioso', description: 'Pasó a baja altura sin hacer ruido.',
         location: 'Tijuana, Baja California, MX', date: '2026-10-20T22:42:00-07:00',
-        characteristics: ['Luces', 'Formación', 'Silencioso'], photoURL: '/vite.svg'  },
+        characteristics: ['Luces', 'Formación', 'Silencioso'], photoURL: 'https://i.pinimg.com/originals/6e/09/7b/6e097b05da7285ce403aee850781e7ed.gif'  },
     // Nulls from the database
     { id: 3, title: null, description: null, location: 'Mexicali, Baja California, MX',
-        characteristics: ['Esferas', 'Rápido'], photoURL: '/vite.svg' },
+        characteristics: ['Esferas', 'Rápido'], photoURL: 'https://mexicali.org/imagenes/lugares-publicos/chinesca.png' },
 ]

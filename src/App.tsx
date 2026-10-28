@@ -14,17 +14,17 @@ import SightingDetail from "./pages/sightings/SightingDetail.tsx";
 import SightingsPage from "./pages/sightings/SightingsPage.tsx";
 
 export const userLinks = [
-  { to: '/user', label: 'Home' },
-  { to: '/user/profile', label: 'Profile' },
-  { to: '/user/settings', label: 'Settings' },
-    { to: '/user/sightings', label: 'Sightings' },
+  { to: '/user', label: 'Inicio' },
+  { to: '/user/profile', label: 'Perfil' },
+  { to: '/user/settings', label: 'Ajustes' },
+    { to: '/user/sightings', label: 'Avistamientos' },
 ]
 
 export const adminLinks = [
-  { to: '/admin', label: 'Home' },
-  { to: '/admin/users', label: 'Users' },
-  { to: '/admin/settings', label: 'Settings' },
-    { to: '/admin/sightings', label: 'Sightings' },
+  { to: '/admin', label: 'Inicio' },
+  { to: '/admin/users', label: 'Usuarios' },
+  { to: '/admin/settings', label: 'Ajustes' },
+    { to: '/admin/sightings', label: 'Avistamientos' },
 ]
 
 export default function App() {
