@@ -9,30 +9,39 @@ import UserSettings from './pages/user/userSettings/UserSettings.tsx'
 import AdminHome from './pages/admin/AdminHome.tsx'
 import AdminUsers from './pages/admin/AdminUsers.tsx'
 import AdminSettings from './pages/admin/AdminSettings.tsx'
+import UserLayout from "./pages/user/UserLayout.tsx";
+import SightingDetail from "./pages/sightings/SightingDetail.tsx";
+import SightingsPage from "./pages/sightings/SightingsPage.tsx";
 
-const userLinks = [
-  { to: '/user', label: 'Home' },
-  { to: '/user/profile', label: 'Profile' },
-  { to: '/user/settings', label: 'Settings' },
+export const userLinks = [
+  { to: '/user', label: 'Inicio' },
+  { to: '/user/profile', label: 'Perfil' },
+  { to: '/user/settings', label: 'Ajustes' },
+    { to: '/user/sightings', label: 'Avistamientos' },
 ]
 
-const adminLinks = [
-  { to: '/admin', label: 'Home' },
-  { to: '/admin/users', label: 'Users' },
-  { to: '/admin/settings', label: 'Settings' },
+export const adminLinks = [
+  { to: '/admin', label: 'Inicio' },
+  { to: '/admin/users', label: 'Usuarios' },
+  { to: '/admin/settings', label: 'Ajustes' },
+    { to: '/admin/sightings', label: 'Avistamientos' },
 ]
 
 export default function App() {
   return (
     <Routes>
+        <Route path ="/sightings/:id" element={<SightingDetail/>} />
+
       <Route element={<PublicOnly />}>
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 
       <Route element={<RequireRole role="USER" />}>
-        <Route path="/user" element={<UserHome />}>
-          <Route index element={<UserHome />} />
+        <Route path="/user" element={<UserLayout/>}>
+          <Route index element={<UserHome/>}/>
+            <Route path ="sightings" element={<SightingsPage/>} />
           <Route path="profile" element={<UserProfile />} />
           <Route path="settings" element={<UserSettings />} />
         </Route>
@@ -41,6 +50,7 @@ export default function App() {
       <Route element={<RequireRole role="ADMIN" />}>
         <Route path="/admin" element={<Layout links={adminLinks} />}>
           <Route index element={<AdminHome />} />
+            <Route path ="sightings" element={<SightingsPage/>} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>
