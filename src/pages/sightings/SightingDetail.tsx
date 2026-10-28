@@ -37,7 +37,7 @@ export default function SightingDetail() {
     return (
         <section className="dossier">
             <div className="dossier-top">
-                <Link to={LIST_ROUTE} className="dossier-back">← BACK TO SIGHTINGS</Link>
+                <Link to={"/user/sightings"} className="dossier-back">← BACK TO SIGHTINGS</Link>
                 <span className="dossier-tag">CLASSIFIED INVESTIGATIVE DOSSIER // DECLASSIFIED ARCHIVE</span>
             </div>
 

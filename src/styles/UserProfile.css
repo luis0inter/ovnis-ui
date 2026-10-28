@@ -1,0 +1,174 @@
+/* OVNIS — Perfil, basado en la captura de referencia */
+.ov-profile,
+.ov-profile * { box-sizing: border-box; }
+
+.ov-profile {
+    --ov-bg: #050b0e;
+    --ov-border: #2d414a;
+    --ov-text: #f3f5f6;
+    --ov-muted: #b4bdc3;
+    --ov-accent: #4fe3e6;
+    min-height: calc(100vh - 82px);
+    background: var(--ov-bg);
+    color: var(--ov-text);
+    padding: 34px 13px 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ov-profile__intro { margin-bottom: 26px; }
+.ov-profile__eyebrow {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--ov-accent);
+    font-size: 11px;
+    font-weight: 500;
+}
+.ov-profile__intro h1 {
+    margin: 0 0 7px;
+    color: var(--ov-text);
+    font-size: 29px;
+    line-height: 1.12;
+    font-weight: 700;
+    letter-spacing: -.7px;
+}
+.ov-profile__intro p {
+    margin: 0;
+    color: var(--ov-muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.ov-profile__columns {
+    display: grid;
+    grid-template-columns: minmax(260px, 329px) minmax(0, 1fr);
+    gap: 10px;
+    align-items: stretch;
+}
+.ov-profile__panel {
+    min-width: 0;
+    min-height: 272px;
+    padding: 15px;
+    background: transparent;
+    border: 1px solid var(--ov-border);
+    border-radius: 0;
+}
+
+/* Información del usuario */
+.ov-profile__user { display: flex; align-items: center; gap: 10px; }
+.ov-profile__avatar {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--ov-accent);
+    background: #163139;
+}
+.ov-profile__user-info { min-width: 0; }
+.ov-profile__user-info h2 {
+    margin: 0 0 5px;
+    color: var(--ov-text);
+    font-size: 17px;
+    line-height: 1.15;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+.ov-profile__user-info span { color: #a8b8c0; font-size: 12px; }
+.ov-profile__rule { height: 1px; background: var(--ov-border); }
+.ov-profile__identity > .ov-profile__rule { margin: 25px 0 24px; }
+.ov-profile__account { margin: 0; }
+.ov-profile__account dt {
+    margin-bottom: 9px;
+    color: #86a4b5;
+    font-size: 10px;
+    line-height: 1.3;
+}
+.ov-profile__account dd { margin: 0; color: var(--ov-text); font-size: 14px; }
+
+/* Historial */
+.ov-profile__history { padding: 15px; }
+.ov-profile__history-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    min-height: 37px;
+}
+.ov-profile__history-head h2 {
+    margin: 0;
+    color: var(--ov-text);
+    font-size: 17px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+.ov-profile__history-head span { color: var(--ov-accent); font-size: 12px; }
+.ov-profile__history > .ov-profile__rule { margin: 15px 0 9px; }
+.ov-profile__record { padding: 20px 0 8px; border-bottom: 1px solid var(--ov-border); }
+.ov-profile__record:last-child { border-bottom: 0; }
+.ov-profile__record-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.ov-profile__record-text { min-width: 0; }
+.ov-profile__record-text h3 {
+    margin: 0 0 5px;
+    color: var(--ov-text);
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+}
+.ov-profile__record-text p {
+    margin: 0;
+    color: #8ca6b4;
+    font-size: 11px;
+    line-height: 1.4;
+}
+.ov-profile__record-arrow { display: inline-flex; padding: 2px; color: var(--ov-accent) !important; flex-shrink: 0; }
+.ov-profile__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; margin-top: 8px; }
+.ov-profile__actions a,
+.ov-profile__actions button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #6ed8ef !important;
+    text-decoration: none;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+.ov-profile__actions button { color: #f28e94 !important; }
+.ov-profile__actions a:hover, .ov-profile__actions button:hover { text-decoration: underline; }
+.ov-profile__actions button:disabled { opacity: .5; cursor: wait; }
+.ov-profile__record-arrow:focus-visible,
+.ov-profile__actions a:focus-visible,
+.ov-profile__actions button:focus-visible { outline: 2px solid var(--ov-accent); outline-offset: 4px; }
+.ov-profile__message, .ov-profile__empty { padding: 20px 0; font-size: 13px; color: var(--ov-muted); }
+.ov-profile__empty h3 { margin: 0 0 7px; font-size: 15px; color: var(--ov-text); }
+.ov-profile__empty p { margin: 0; }
+.ov-profile__error { color: #ff969c; font-size: 12px; }
+
+/* Encabezado compacto, solo para Perfil */
+.user-layout .ov-profile-topbar {
+    min-height: 82px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 3px;
+    padding: 23px 10px 0;
+    border-bottom: 1px solid var(--ov-border, #2d414a);
+    background: #050b0e;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.user-layout .ov-profile-topbar__brand { font-size: 15px; font-weight: 700; color: #f4f7f7; text-decoration: none; }
+.user-layout .ov-profile-topbar__nav { display: flex; align-items: center; gap: 4px; padding-top: 2px; font-size: 10px; }
+.user-layout .ov-profile-topbar__nav a { color: #7da3b5; text-decoration: none; }
+.user-layout .ov-profile-topbar__nav a:hover { color: #4fe3e6; }
+.user-layout .ov-profile-topbar__nav span { color: #7da3b5; }
+
+@media (max-width: 680px) {
+    .ov-profile { padding: 28px 14px 40px; }
+    .ov-profile__columns { grid-template-columns: 1fr; }
+    .ov-profile__panel { min-height: 0; }
+    .ov-profile__identity { min-height: 230px; }
+    .ov-profile__history { min-height: 260px; }
+    .user-layout .ov-profile-topbar { min-height: 72px; padding-top: 20px; }
+}
