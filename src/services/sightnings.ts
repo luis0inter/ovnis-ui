@@ -4,6 +4,12 @@ import {MOCK_SIGNTHINGS} from "./mockSightings.ts";
 
 const USE_MOCK = true
 
+// SCRUM-36: public listing endpoint (SCRUM-37, backend) already excludes
+// sightings hidden by moderation, so it's safe for visitors and registered users alike.
+export async function getSightings(): Promise<Sighting[]> {
+    return api<Sighting[]>('/api/sightings')
+}
+
 //Returns null when sigthing doesn't exist (404) so the page can show "not found".
 
 export async function getSightingById(id: string): Promise<Sighting | null>{

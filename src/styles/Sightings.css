@@ -1,0 +1,96 @@
+.uh-sightings-status {
+  padding: 2.5rem 0;
+  color: var(--uh-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.uh-sightings-status-error {
+  display: grid;
+  gap: 0.9rem;
+  justify-content: center;
+  color: #e7a0a0;
+}
+
+.uh-sighting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.1rem;
+}
+
+.uh-sighting-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--uh-border);
+  background: linear-gradient(130deg, rgba(18, 29, 33, 0.7), rgba(8, 14, 17, 0.68));
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.uh-sighting-card:hover {
+  border-color: rgba(86, 217, 212, 0.45);
+  background: #0b1418;
+  transform: translateY(-2px);
+}
+
+.uh-sighting-media {
+  display: grid;
+  aspect-ratio: 16 / 10;
+  place-items: center;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.55);
+}
+.uh-sighting-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.uh-sighting-media span {
+  color: var(--uh-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+}
+
+.uh-sighting-body {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.1rem 1.25rem 1.3rem;
+}
+.uh-sighting-body strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--uh-text);
+}
+.uh-sighting-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+.uh-sighting-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--uh-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+}
+.uh-sighting-meta svg { color: var(--uh-accent); flex-shrink: 0; }
+.uh-sighting-body p {
+  margin: 0;
+  overflow: hidden;
+  color: var(--uh-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media (max-width: 620px) {
+  .uh-sighting-grid { grid-template-columns: 1fr; }
+}

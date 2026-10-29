@@ -11,7 +11,7 @@ type State =
     | { status: 'notFound' }
     | { status: 'loaded'; avistamiento: Sighting}
 
-const LIST_ROUTE = '/sightings' // must confirm route with Manuel
+const LIST_ROUTE = '/sightings'
 function formatDate(iso: string) {
     const d = new Date(iso)
     const date = d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -37,7 +37,7 @@ export default function SightingDetail() {
     return (
         <section className="dossier">
             <div className="dossier-top">
-                <Link to={"/user/sightings"} className="dossier-back">← BACK TO SIGHTINGS</Link>
+                <Link to={LIST_ROUTE} className="dossier-back">← BACK TO SIGHTINGS</Link>
                 <span className="dossier-tag">CLASSIFIED INVESTIGATIVE DOSSIER // DECLASSIFIED ARCHIVE</span>
             </div>
 

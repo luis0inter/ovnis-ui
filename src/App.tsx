@@ -30,6 +30,7 @@ export const adminLinks = [
 export default function App() {
   return (
     <Routes>
+        <Route path ="/sightings" element={<SightingsPage/>} />
         <Route path ="/sightings/:id" element={<SightingDetail/>} />
 
       <Route element={<PublicOnly />}>
