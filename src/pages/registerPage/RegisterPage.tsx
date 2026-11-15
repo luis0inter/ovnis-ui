@@ -14,8 +14,25 @@ export default function RegisterPage() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
-    setLoading(true)
+    const missing: String[] = []
+    if (!username.trim()) {
+      missing.push('Nombre de usuario')
+    }
+
+    if (!email.trim()) {
+      missing.push('Correo electrónico')
+    }
+
+    if (!password.trim()) {
+      missing.push('Contraseña')
+    }
+
+    if (missing.length > 0) {
+      setError(`Faltan campos:  ${missing.join(', ')}`)
+      return
+    }
     try {
+      setLoading(true)
       await register(username, email, password)
     } catch (err) {
       setError((err as Error).message)
@@ -75,7 +92,7 @@ export default function RegisterPage() {
             <h1 className="lg-title" id="register-title">Crea tu cuenta</h1>
             <p className="lg-lead">Registra avistamientos y consulta los reportes de la comunidad.</p>
 
-            <form className="lg-form" onSubmit={handleSubmit}>
+            <form className="lg-form" onSubmit={handleSubmit} noValidate>
               <div className="lg-field">
                 <label className="lg-label" htmlFor="register-username">Nombre de usuario</label>
                 <input
@@ -87,7 +104,7 @@ export default function RegisterPage() {
                   onChange={(e) => setUsername(e.target.value)}
                   minLength={3}
                   maxLength={50}
-                  required
+
                   autoFocus
                 />
               </div>
@@ -103,7 +120,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   maxLength={254}
-                  required
+
                 />
               </div>
 
@@ -119,7 +136,7 @@ export default function RegisterPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   minLength={8}
                   maxLength={72}
-                  required
+
                 />
               </div>
 

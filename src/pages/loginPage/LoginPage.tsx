@@ -13,11 +13,23 @@ export default function LoginPage() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
-    setLoading(true)
+    const missing: string[] = []
+    if (!username.trim()){
+      missing.push('Nombre de usuario')
+    }
+    if (!password.trim()){
+      missing.push('Contraseña')
+    }
+    if (missing.length > 0){
+      setError(`Faltan campos:  ${missing.join(', ')}`)
+    }
     try {
+      setLoading(true)
       await login(username, password)
     } catch (err) {
       setError((err as Error).message)
+
+    }finally{
       setLoading(false)
     }
   }
@@ -74,7 +86,7 @@ export default function LoginPage() {
             <h1 className="lg-title" id="login-title">Inicia sesión</h1>
             <p className="lg-lead">Accede a los reportes y comparte tus propios avistamientos.</p>
 
-            <form className="lg-form" onSubmit={handleSubmit}>
+            <form className="lg-form" onSubmit={handleSubmit} noValidate>
               <label className="lg-label" htmlFor="username">Nombre de usuario</label>
               <input
                 className="lg-input"
@@ -83,7 +95,7 @@ export default function LoginPage() {
                 autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                required
+
                 autoFocus
               />
 
@@ -96,7 +108,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
+
               />
 
               {error && <p className="lg-error" role="alert">{error}</p>}
