@@ -36,13 +36,20 @@ export default function UserHome() {
               lo que todavía no podemos explicar.
             </p>
             <div className="uh-hero-actions">
-              <Link className="uh-primary-action" to="/user#archivo">
+              <Link className="uh-primary-action" to="/#archivo">
                 Explorar el archivo <ArrowRight size={16} aria-hidden="true" />
               </Link>
-              <Link className="uh-secondary-action" to="/user/profile">
-                <CirclePlay size={18} aria-hidden="true" />
-                Mi perfil
-              </Link>
+              {user?.role === 'ADMIN' ? (
+                <Link className="uh-secondary-action" to="/admin/users">
+                  <CirclePlay size={18} aria-hidden="true" />
+                  Gestionar usuarios
+                </Link>
+              ) : (
+                <Link className="uh-secondary-action" to="/profile">
+                  <CirclePlay size={18} aria-hidden="true" />
+                  Mi perfil
+                </Link>
+              )}
             </div>
           </div>
 
@@ -80,24 +87,49 @@ export default function UserHome() {
             <span className="uh-section-coordinate">OBSERVA · DOCUMENTA · COMPARTE</span>
           </div>
           <div className="uh-cards">
-            <Link className="uh-card" to="/user/profile">
-              <span className="uh-card-icon"><Search size={18} aria-hidden="true" /></span>
-              <span className="uh-card-content">
-                <span className="uh-card-label">01 / OBSERVADOR</span>
-                <strong>Tu perfil</strong>
-                <span>Consulta y actualiza tu información personal.</span>
-              </span>
-              <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true" />
-            </Link>
-            <Link className="uh-card" to="/user/settings">
-              <span className="uh-card-icon"><Plus size={18} aria-hidden="true" /></span>
-              <span className="uh-card-content">
-                <span className="uh-card-label">02 / PREFERENCIAS</span>
-                <strong>Ajustes de cuenta</strong>
-                <span>Administra tus preferencias y acceso.</span>
-              </span>
-              <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true" />
-            </Link>
+            {user?.role === 'ADMIN' ? (
+              <>
+                <Link className="uh-card" to="/admin/users">
+                  <span className="uh-card-icon"><Search size={18} aria-hidden="true" /></span>
+                  <span className="uh-card-content">
+                    <span className="uh-card-label">01 / ADMINISTRACIÓN</span>
+                    <strong>Usuarios</strong>
+                    <span>Consulta y administra las cuentas registradas.</span>
+                  </span>
+                  <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true" />
+                </Link>
+                <Link className="uh-card" to="/admin/settings">
+                  <span className="uh-card-icon"><Plus size={18} aria-hidden="true" /></span>
+                  <span className="uh-card-content">
+                    <span className="uh-card-label">02 / CONFIGURACIÓN</span>
+                    <strong>Ajustes del sistema</strong>
+                    <span>Administra las preferencias administrativas.</span>
+                  </span>
+                  <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link className="uh-card" to="/profile">
+                  <span className="uh-card-icon"><Search size={18} aria-hidden="true" /></span>
+                  <span className="uh-card-content">
+                    <span className="uh-card-label">01 / OBSERVADOR</span>
+                    <strong>Tu perfil</strong>
+                    <span>Consulta y actualiza tu información personal.</span>
+                  </span>
+                  <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true" />
+                </Link>
+                <Link className="uh-card" to="/settings">
+                  <span className="uh-card-icon"><Plus size={18} aria-hidden="true" /></span>
+                  <span className="uh-card-content">
+                    <span className="uh-card-label">02 / PREFERENCIAS</span>
+                    <strong>Ajustes de cuenta</strong>
+                    <span>Administra tus preferencias y acceso.</span>
+                  </span>
+                  <ArrowRight className="uh-card-arrow" size={18} aria-hidden="true" />
+                </Link>
+              </>
+            )}
           </div>
         </section>
       </main>

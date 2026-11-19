@@ -1,41 +1,21 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { ChevronRight, UserRound } from 'lucide-react'
 import { useAuth } from '../../../auth/AuthContext.tsx'
 import type { Sighting } from '../../../types.ts'
 import './../../../styles/UserProfile.css'
 
-type LoadState =
-    | { status: 'loading' }
-    | { status: 'error'; message: string }
-    | { status: 'loaded'; items: Sighting[] }
-
-function formatDate(date?: string) {
-    if (!date) return 'Fecha no disponible'
-    const value = new Date(date)
-    if (Number.isNaN(value.getTime())) return 'Fecha no disponible'
-    return new Intl.DateTimeFormat('es-MX', {
-        day: 'numeric', month: 'short', year: 'numeric',
-    }).format(value)
-}
-
 export default function UserProfile() {
-    const { user, authFetch } = useAuth()
-    const [data, setData] = useState<LoadState>({ status: 'loading' })
-    const [deletingId, setDeletingId] = useState<number | null>(null)
-    const [actionError, setActionError] = useState('')
+    const { user } = useAuth()
+    const data: { status: 'loaded'; items: Sighting[] } = { status: 'loaded', items: [] }
 
-    useEffect(() => {
-        if (!user) return
-        let active = true
-        setData({ status: 'loading' })
-
-
-
-        return () => { active = false }
-    }, [user?.username, authFetch])
-
-
+    function formatDate(date?: string) {
+        if (!date) return 'Fecha no disponible'
+        const value = new Date(date)
+        if (Number.isNaN(value.getTime())) return 'Fecha no disponible'
+        return new Intl.DateTimeFormat('es-MX', {
+            day: 'numeric', month: 'short', year: 'numeric',
+        }).format(value)
+    }
 
     return (
         <main className="ov-profile" id="contenido">
@@ -75,16 +55,6 @@ export default function UserProfile() {
 
                     <div className="ov-profile__rule" />
 
-                    {actionError && <p className="ov-profile__error" role="alert">{actionError}</p>}
-
-                    {data.status === 'loading' && (
-                        <p className="ov-profile__message" role="status">Cargando tus avistamientos...</p>
-                    )}
-
-                    {data.status === 'error' && (
-                        <p className="ov-profile__error" role="alert">{data.message}</p>
-                    )}
-
                     {data.status === 'loaded' && data.items.length === 0 && (
                         <div className="ov-profile__empty">
                             <h3>Aún no tienes avistamientos</h3>
@@ -114,9 +84,9 @@ export default function UserProfile() {
                                 <button
                                     type="button"
 
-                                    disabled={deletingId !== null}
+                                    disabled={false}
                                 >
-                                    {deletingId === sighting.id ? 'Eliminando...' : 'Eliminar'}
+                                    Eliminar
                                 </button>
                             </div>
                         </article>
