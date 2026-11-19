@@ -1,26 +1,38 @@
-import {NavLink } from 'react-router'
-import {userLinks, adminLinks} from './../App.tsx'
-type  NavBarProps = {
-    role : "USER"| "ADMIN"
-}
-export default function NavBar({role}:NavBarProps) {
+import { NavLink } from 'react-router'
+import { useAuth } from '../auth/AuthContext.tsx'
 
-    const links = role === "ADMIN" ? adminLinks : userLinks;
+export const userLinks = [
+  { to: '/', label: 'Inicio' },
+  { to: '/profile', label: 'Perfil' },
+  { to: '/sightings', label: 'Avistamientos' },
+  { to: '/settings', label: 'Ajustes' },
+]
 
+export const adminLinks = [
+  { to: '/', label: 'Inicio' },
+  { to: '/admin/users', label: 'Usuarios' },
+  { to: '/admin/sightings', label: 'Avistamientos' },
+  { to: '/admin/settings', label: 'Ajustes' },
+]
 
-    return(
-        <div>
-            <nav className="uh-nav" aria-label="Navegación principal">
-                {links.map((link) => (<NavLink
-                    key = {link.to}
-                    to={link.to}
-                    end = {link.label == "Inicio"}
-                    >
-                    {link.label}
-                    </NavLink>))}
-            </nav>
+export default function NavBar() {
+  const { user } = useAuth()
 
+  if (!user) return null
 
-        </div>
-    )
+  const links = user.role === 'ADMIN' ? adminLinks : userLinks
+
+  return (
+    <nav className="uh-nav" aria-label="Navegación principal">
+      {links.map((link) => (
+        <NavLink
+          key={link.to}
+          to={link.to}
+          end={link.label === 'Inicio'}
+        >
+          {link.label}
+        </NavLink>
+      ))}
+    </nav>
+  )
 }

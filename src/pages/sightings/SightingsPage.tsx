@@ -1,4 +1,4 @@
-import {ArrowRight, CirclePlay, Plus, Search} from 'lucide-react'
+import {ArrowRight, Search} from 'lucide-react'
 import {Link} from 'react-router'
 import '../../styles/UserHome.css'
 
@@ -36,7 +36,7 @@ export default function SightingsPage() {
                             <span className="uh-section-coordinate">OBSERVA · DOCUMENTA · COMPARTE</span>
                         </div>
                         <div className="uh-cards">
-                            <Link className="uh-card" to="/user/profile">
+                            <Link className="uh-card" to="/profile">
                                 <span className="uh-card-icon"><Search size={18} aria-hidden="true"/></span>
                                 <span className="uh-card-content">
                 <span className="uh-card-label">01 / OBSERVADOR</span>
