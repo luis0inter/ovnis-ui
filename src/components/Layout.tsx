@@ -9,8 +9,8 @@ interface Props {
 export default function Layout({ links }: Props) {
   const { user, logout } = useAuth()
   const location = useLocation()
-  const isUserHome = links[0]?.to === '/user' && location.pathname === '/user'
-
+  const isUserHome = links[0]?.to === '/user' && location.pathname === '/user';
+  const isAdmin = user?.role == 'ADMIN';
   return (
     <>
       <header className={`header${isUserHome ? ' user-home-layout-header' : ''}`}>

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router'
+import {BrowserRouter, Route, Routes} from 'react-router'
 import { PublicOnly, Redirect, RequireRole } from './auth/guards.tsx'
 import Layout from './components/Layout.tsx'
 import LoginPage from './pages/loginPage/LoginPage.tsx'
@@ -29,34 +29,37 @@ export const adminLinks = [
 
 export default function App() {
   return (
-    <Routes>
-        <Route path ="/sightings/:id" element={<SightingDetail/>} />
+      <BrowserRouter>
+          <Routes>
+              <Route path ="/sightings/:id" element={<SightingDetail/>} />
 
-      <Route element={<PublicOnly />}>
+              <Route element={<PublicOnly />}>
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Route>
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+              </Route>
 
-      <Route element={<RequireRole role="USER" />}>
-        <Route path="/user" element={<UserLayout/>}>
-          <Route index element={<UserHome/>}/>
-            <Route path ="sightings" element={<SightingsPage/>} />
-          <Route path="profile" element={<UserProfile />} />
-          <Route path="settings" element={<UserSettings />} />
-        </Route>
-      </Route>
+              <Route element={<RequireAuth/>}>
+                  <Route element={<Layout/>}>
+                      <Route index element={<UserHome/>}/>
+                      <Route path ="sightings" element={<SightingsPage/>} />
+                      <Route path="profile" element={<UserProfile />} />
+                      <Route path="settings" element={<UserSettings />} />
+                  </Route>
+              </Route>
 
-      <Route element={<RequireRole role="ADMIN" />}>
-        <Route path="/admin" element={<Layout links={adminLinks} />}>
-          <Route index element={<AdminHome />} />
-            <Route path ="sightings" element={<SightingsPage/>} />
-          <Route path="users" element={<AdminUsers />} />
-          <Route path="settings" element={<AdminSettings />} />
-        </Route>
-      </Route>
+              <Route element={<RequireRole role="ADMIN" />}>
+                  <Route path="/admin" element={<Layout links={adminLinks} />}>
+                      <Route index element={<AdminHome />} />
+                      <Route path ="sightings" element={<SightingsPage/>} />
+                      <Route path="users" element={<AdminUsers />} />
+                      <Route path="settings" element={<AdminSettings />} />
+                  </Route>
+              </Route>
 
-      <Route path="*" element={<Redirect />} />
-    </Routes>
+              <Route path="*" element={<Redirect />} />
+          </Routes>
+      </BrowserRouter>
+
   )
 }

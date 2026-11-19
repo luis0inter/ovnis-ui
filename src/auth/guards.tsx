@@ -25,3 +25,15 @@ export function Redirect() {
   const { user } = useAuth()
   return <Navigate to={user ? homeFor(user.role) : '/login'} replace />
 }
+
+export function RequireAdmin(){
+  const {user, isAuthenticated} = useAuth()
+  if (!isAuthenticated){
+    return <Navigate to = "/login" replace />
+  }
+
+  if(user?.role !== "ADMIN"){
+    return <Navigate to="/home" replace />
+  }
+  return <Outlet />
+}
