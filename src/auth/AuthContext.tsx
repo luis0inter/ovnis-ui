@@ -5,6 +5,7 @@ import { readToken } from './jwt.ts'
 
 interface AuthValue {
   user: User | null
+  isAuthenticated: boolean
   login: (username: string, password: string) => Promise<void>
   register: (username: string, email: string, password: string) => Promise<void>
   logout: () => void
@@ -23,6 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(storedToken)
   const claims = token ? readToken(token) : null
   const user: User | null = claims ? { username: claims.sub, role: claims.role } : null
+  const isAuthenticated = user !== null;
 
   function saveToken(value: string | null) {
     if (value) localStorage.setItem(TOKEN_KEY, value)
@@ -65,8 +67,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => clearTimeout(id)
   }, [expiresAt])
 
+  const value : AuthValue = {
+    user,
+    isAuthenticated,
+    login,
+    register,
+    logout,
+    authFetch,
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, authFetch }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   )
