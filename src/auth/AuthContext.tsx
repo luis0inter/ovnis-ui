@@ -12,6 +12,7 @@ interface AuthValue {
   authFetch: <T>(path: string) => Promise<T>
 }
 
+
 const AuthContext = createContext<AuthValue | null>(null)
 const TOKEN_KEY = 'token'
 
@@ -37,6 +38,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       method: 'POST',
       body: { username, password },
     })
+
+    const claims = readToken(res.accessToken)
+    if(!claims){
+      throw new Error('Invalid authentication token')
+    }
     saveToken(res.accessToken)
   }
 
