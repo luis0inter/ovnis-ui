@@ -14,6 +14,10 @@ import SightingsPage from './pages/sightings/SightingsPage.tsx'
 export default function App() {
   return (
     <Routes>
+      {/* Público: visitantes y usuarios registrados por igual (HU-009, criterio 3) */}
+      <Route path="/sightings" element={<SightingsPage />} />
+      <Route path="/sightings/:id" element={<SightingDetail />} />
+
       <Route element={<PublicOnly />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -26,7 +30,6 @@ export default function App() {
           <Route element={<RequireRole role="USER" />}>
             <Route path="profile" element={<UserProfile />} />
             <Route path="settings" element={<UserSettings />} />
-            <Route path="sightings" element={<SightingsPage />} />
           </Route>
 
           <Route element={<RequireRole role="ADMIN" />}>
@@ -37,7 +40,6 @@ export default function App() {
         </Route>
       </Route>
 
-      <Route path="/sightings/:id" element={<SightingDetail />} />
       <Route path="*" element={<Redirect />} />
     </Routes>
   )
