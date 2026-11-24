@@ -1,37 +1,27 @@
-import { NavLink, Outlet, useLocation } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
 import { useAuth } from '../auth/AuthContext.tsx'
-import NavBar from "./NavBar.tsx";
+import NavBar from './NavBar.tsx'
 
-interface Props {
-  links: { to: string; label: string }[]
-}
-
-export default function Layout({ links }: Props) {
+export default function Layout() {
   const { user, logout } = useAuth()
   const location = useLocation()
-  const isUserHome = links[0]?.to === '/user' && location.pathname === '/user'
+  const isHome = location.pathname === '/'
 
   return (
-    <>
-      <header className={`header${isUserHome ? ' user-home-layout-header' : ''}`}>
-        <strong>Internal Access</strong>
-        <nav>
-          {links.map((link) => (
-            <NavLink key={link.to} to={link.to} end>
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
+    <div className="app-shell">
+      <header className="app-header">
+        <strong className="app-brand">OVNIS</strong>
+        <NavBar />
         <div className="account">
-          <span>{user?.username}</span>
+          <span className="account-name">{user?.username}</span>
           <span className="role">{user?.role}</span>
-          <button className="secondary" onClick={logout}>Log out</button>
+          <button className="secondary logout-button" onClick={logout}>Log out</button>
         </div>
       </header>
-      <main className={`main${isUserHome ? ' user-home-layout-main' : ''}`}>
-          <NavBar role="USER"/>
+
+      <main className={isHome ? 'app-main app-main--full' : 'app-main'}>
         <Outlet />
       </main>
-    </>
+    </div>
   )
 }
