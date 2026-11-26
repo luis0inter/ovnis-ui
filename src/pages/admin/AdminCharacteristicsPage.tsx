@@ -8,7 +8,7 @@ interface Characteristic{
 }
 
 
-export default function AdminCharacteristics() {
+export default function AdminCharacteristicsPage() {
     const [characteristics, setCharacteristics] = useState<Characteristic[]>([]); //stores received characteristics
 
     const [loading, setLoading] = useState(true); //tells if we are waiting a response

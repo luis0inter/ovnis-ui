@@ -3,6 +3,7 @@ import { Calendar, MapPin } from 'lucide-react'
 import { Link } from 'react-router'
 import type { Sighting } from '../../types.ts'
 import { getSightings } from '../../services/sightnings.ts'
+import { useAuth } from '../../auth/AuthContext.tsx'
 import '../../styles/UserHome.css'
 import '../../styles/Sightings.css'
 
@@ -20,7 +21,8 @@ function formatDate(iso?: string) {
 
 export default function SightingsPage() {
     const [state, setState] = useState<ListState>({ status: 'loading' })
-    const [attempt, setAttempt] = useState(0)
+    const [attempt, setAttempt] = useState(0);
+    const {user} = useAuth();
 
     useEffect(() => {
         let cancelled = false
@@ -47,6 +49,15 @@ export default function SightingsPage() {
                         <div className="uh-hero-content">
 
                             <h1 id="uh-title"><br/><em>Avistamientos</em></h1>
+
+                            {user?.role === 'ADMIN' && (
+                                <Link
+                                    to="/admin/characteristics"
+                                    className="uh-secondary-action"
+                                >
+                                    Administrar características
+                                </Link>
+                            )}
 
 
                         </div>
