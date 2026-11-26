@@ -10,7 +10,7 @@ import AdminUsers from './pages/admin/AdminUsers.tsx'
 import AdminSettings from './pages/admin/AdminSettings.tsx'
 import SightingDetail from './pages/sightings/SightingDetail.tsx'
 import SightingsPage from './pages/sightings/SightingsPage.tsx'
-
+import AdminCharacteristics from "./components/admin/AdminCharacteristics.tsx";
 export default function App() {
   return (
     <Routes>
@@ -36,6 +36,7 @@ export default function App() {
             <Route path="admin/users" element={<AdminUsers />} />
             <Route path="admin/settings" element={<AdminSettings />} />
             <Route path="admin/sightings" element={<SightingsPage />} />
+            <Route path="admin/characteristics" element={<AdminCharacteristics />} />
           </Route>
         </Route>
       </Route>
