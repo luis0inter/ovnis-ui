@@ -20,6 +20,12 @@ function toDatetimeLocalMax() {
     return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`
 }
 
+// The backend's fechaHora comes back as "2026-10-20T22:42:00" (no timezone, matching
+// what <input type="datetime-local"> expects) — just drop the seconds.
+function toDatetimeLocalValue(fechaHora: string) {
+    return fechaHora.slice(0, 16)
+}
+
 export default function SightingForm() {
     const { id } = useParams()
     const isEdit = Boolean(id)
@@ -50,10 +56,9 @@ export default function SightingForm() {
         return () => { cancelled = true }
     }, [])
 
-    // Best-effort prefill when editing. getSightingById is still mock-backed and uses a
-    // `Sighting` type that doesn't match the backend's real field names (see SCRUM-76/36
-    // comments), so only title/description can be trusted here — location, date and the
-    // previously selected characteristics are left for the user to re-enter.
+    // HU-026 (SCRUM-78/79): prefill the full sighting when editing. This only became
+    // possible once the `Sighting` type was fixed to match the backend (SCRUM-64/76) —
+    // getSightingById now returns the real record instead of mock data.
     useEffect(() => {
         if (!id) return
         let cancelled = false
@@ -61,15 +66,19 @@ export default function SightingForm() {
             .then(sighting => {
                 if (cancelled) return
                 if (!sighting) {
-                    setPrefillNotice('No se pudieron cargar los datos existentes de este avistamiento (ver SCRUM-76). Completa el formulario manualmente.')
+                    setPrefillNotice('No se pudo cargar este avistamiento para editarlo. Puede que ya no esté disponible.')
                     return
                 }
                 setTitle(sighting.title ?? '')
                 setDescription(sighting.description ?? '')
-                setPrefillNotice('Ubicación, fecha y características no se precargaron automáticamente (ver SCRUM-76); confírmalas antes de guardar.')
+                setLugar(sighting.lugar ?? '')
+                setCiudad(sighting.ciudad ?? '')
+                setRegion(sighting.region ?? '')
+                if (sighting.fechaHora) setFechaHora(toDatetimeLocalValue(sighting.fechaHora))
+                setSelectedIds(new Set(sighting.caracteristicas.map(c => c.id)))
             })
-            .catch(() => {
-                if (!cancelled) setPrefillNotice('No se pudieron cargar los datos existentes de este avistamiento (ver SCRUM-76). Completa el formulario manualmente.')
+            .catch((err: Error) => {
+                if (!cancelled) setPrefillNotice(`No se pudieron cargar los datos existentes: ${err.message}`)
             })
         return () => { cancelled = true }
     }, [id])
@@ -143,7 +152,7 @@ export default function SightingForm() {
             </div>
 
             <form className="ov-profile__panel sf-panel" onSubmit={handleSubmit} noValidate>
-                {prefillNotice && <p className="sf-notice" role="status">{prefillNotice}</p>}
+                {prefillNotice && <p className="ov-profile__error" role="alert">{prefillNotice}</p>}
 
                 <div className="sf-field">
                     <label className="sf-label" htmlFor="sf-title">Título</label>
