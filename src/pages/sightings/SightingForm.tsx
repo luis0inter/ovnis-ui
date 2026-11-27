@@ -136,12 +136,13 @@ export default function SightingForm() {
 
         try {
             setSubmitting(true)
-            if (isEdit && id) {
-                await updateSighting(id, payload, authFetch)
-            } else {
-                await createSighting(payload, authFetch)
-            }
-            navigate('/sightings')
+            // HU-006 (SCRUM-29/30): el avistamiento queda visible de inmediato (sin
+            // aprobación, SCRUM-31 ya lo crea así), así que podemos ir directo a su
+            // propio detalle en vez de dejar al usuario buscarlo en el listado.
+            const result = isEdit && id
+                ? await updateSighting(id, payload, authFetch)
+                : await createSighting(payload, authFetch)
+            navigate(`/sightings/${result.id}`)
         } catch (err) {
             setSubmitError((err as Error).message)
             setSubmitting(false)
