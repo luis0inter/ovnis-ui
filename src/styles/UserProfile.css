@@ -145,7 +145,18 @@
 .ov-profile__message, .ov-profile__empty { padding: 20px 0; font-size: 13px; color: var(--ov-muted); }
 .ov-profile__empty h3 { margin: 0 0 7px; font-size: 15px; color: var(--ov-text); }
 .ov-profile__empty p { margin: 0; }
-.ov-profile__error { color: #ff969c; font-size: 12px; }
+.ov-profile__error { display: grid; gap: 10px; padding: 20px 0; color: #ff969c; font-size: 12px; }
+.ov-profile__retry {
+    justify-self: start;
+    padding: 6px 16px;
+    border: 1px solid var(--ov-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ov-accent);
+    font-size: 11px;
+    cursor: pointer;
+}
+.ov-profile__retry:hover { border-color: var(--ov-accent); }
 
 /* Encabezado compacto, solo para Perfil */
 .user-layout .ov-profile-topbar {
