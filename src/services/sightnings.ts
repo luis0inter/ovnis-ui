@@ -19,6 +19,12 @@ export async function getSightings(filters: SightingFilters = {}): Promise<Sight
     return api<Sighting[]>(`/api/sightings${query ? `?${query}` : ''}`)
 }
 
+// HU-025 (SCRUM-75/76): the backend already scopes this to the authenticated user
+// (jwt.getSubject()), so the response can never include another user's sightings.
+export async function getMySightings(authFetch: AuthedFetch): Promise<Sighting[]> {
+  return authFetch<Sighting[]>('/api/user/me/sightings')
+}
+
 //Returns null when sigthing doesn't exist (404) so the page can show "not found".
 export async function getSightingById(id: string): Promise<Sighting | null> {
   try {

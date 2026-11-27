@@ -1,21 +1,48 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { ChevronRight, UserRound } from 'lucide-react'
 import { useAuth } from '../../../auth/AuthContext.tsx'
 import type { Sighting } from '../../../types.ts'
+import { getMySightings } from '../../../services/sightnings.ts'
 import './../../../styles/UserProfile.css'
 
-export default function UserProfile() {
-    const { user } = useAuth()
-    const data: { status: 'loaded'; items: Sighting[] } = { status: 'loaded', items: [] }
+type HistoryState =
+    | { status: 'loading' }
+    | { status: 'error'; message: string }
+    | { status: 'loaded'; items: Sighting[] }
 
-    function formatDate(date?: string) {
-        if (!date) return 'Fecha no disponible'
-        const value = new Date(date)
-        if (Number.isNaN(value.getTime())) return 'Fecha no disponible'
-        return new Intl.DateTimeFormat('es-MX', {
-            day: 'numeric', month: 'short', year: 'numeric',
-        }).format(value)
-    }
+function formatDate(date?: string | null) {
+    if (!date) return 'Fecha no disponible'
+    const value = new Date(date)
+    if (Number.isNaN(value.getTime())) return 'Fecha no disponible'
+    return new Intl.DateTimeFormat('es-MX', {
+        day: 'numeric', month: 'short', year: 'numeric',
+    }).format(value)
+}
+
+function formatLocation(sighting: Sighting) {
+    const parts = [sighting.lugar, sighting.ciudad, sighting.region].filter(
+        (part): part is string => Boolean(part && part.trim())
+    )
+    return parts.length > 0 ? parts.join(', ') : null
+}
+
+export default function UserProfile() {
+    const { user, authFetch } = useAuth()
+    const [data, setData] = useState<HistoryState>({ status: 'loading' })
+    const [attempt, setAttempt] = useState(0)
+
+    // HU-025 (SCRUM-75/76): GET /api/user/me/sightings ya filtra por el usuario
+    // autenticado en el backend (criterio 2: no mezcla avistamientos de otros usuarios).
+    useEffect(() => {
+        let cancelled = false
+        setData({ status: 'loading' })
+        getMySightings(authFetch)
+            .then(items => { if (!cancelled) setData({ status: 'loaded', items }) })
+            .catch((err: Error) => { if (!cancelled) setData({ status: 'error', message: err.message }) })
+        return () => { cancelled = true }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [attempt])
 
     return (
         <main className="ov-profile" id="contenido">
@@ -55,6 +82,19 @@ export default function UserProfile() {
 
                     <div className="ov-profile__rule" />
 
+                    {data.status === 'loading' && (
+                        <p className="ov-profile__message" role="status">Cargando tus avistamientos...</p>
+                    )}
+
+                    {data.status === 'error' && (
+                        <div className="ov-profile__error" role="alert">
+                            <p>{data.message}</p>
+                            <button type="button" className="ov-profile__retry" onClick={() => setAttempt(n => n + 1)}>
+                                Reintentar
+                            </button>
+                        </div>
+                    )}
+
                     {data.status === 'loaded' && data.items.length === 0 && (
                         <div className="ov-profile__empty">
                             <h3>Aún no tienes avistamientos</h3>
@@ -67,7 +107,7 @@ export default function UserProfile() {
                             <div className="ov-profile__record-top">
                                 <div className="ov-profile__record-text">
                                     <h3>{sighting.title ?? 'Registro de avistamiento'}</h3>
-                                    <p>{formatDate(sighting.fechaHora ?? undefined)} · {sighting.ciudad ?? 'Ubicación no disponible'}</p>
+                                    <p>{formatDate(sighting.fechaHora)} · {formatLocation(sighting) ?? 'Ubicación no disponible'}</p>
                                 </div>
                                 <Link
                                     to={`/sightings/${sighting.id}`}
