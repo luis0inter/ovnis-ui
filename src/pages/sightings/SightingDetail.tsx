@@ -19,6 +19,11 @@ function formatDate(iso: string) {
     return `${date} // ${hora}`
 }
 
+function formatLocation(a: { lugar: string | null; ciudad: string | null; region: string | null }) {
+    const parts = [a.lugar, a.ciudad, a.region].filter((part): part is string => Boolean(part && part.trim()))
+    return parts.length > 0 ? parts.join(', ') : null
+}
+
 export default function SightingDetail() {
     const { id } = useParams()
     const [state, setState] = useState<State>({ status: 'loading' })
@@ -65,9 +70,9 @@ export default function SightingDetail() {
                                 <h1 className="dossier-title">{a.title ?? 'Untitled Sighting'}</h1>
                             </div>
                             <div className="dossier-meta">
-                                <div><MapPin size={14} /><span>{a.location ?? 'Location unknown'}</span></div>
-                                {a.date && (
-                                    <div className="dossier-meta-dim"><Calendar size={14} /><span>{formatDate(a.date)}</span></div>
+                                <div><MapPin size={14} /><span>{formatLocation(a) ?? 'Location unknown'}</span></div>
+                                {a.fechaHora && (
+                                    <div className="dossier-meta-dim"><Calendar size={14} /><span>{formatDate(a.fechaHora)}</span></div>
                                 )}
                             </div>
                             <p className="dossier-desc">{a.description?? 'No description on file.'}</p>
@@ -75,9 +80,9 @@ export default function SightingDetail() {
 
                         {/* Center: evidence viewer */}
                         <div className="dossier-media">
-                            {a.photoURL? (
+                            {a.fotoUrl? (
                                 <div className="hud-border dossier-photo">
-                                    <img src={a.photoURL} alt={`Fotografía del avistamiento ${a.id}`} />
+                                    <img src={a.fotoUrl} alt={`Fotografía del avistamiento ${a.id}`} />
                                 </div>
                             ) : (
                                 <div className="hud-border dossier-photo dossier-photo-empty">NO MEDIA ON FILE</div>
@@ -86,11 +91,11 @@ export default function SightingDetail() {
 
                         {/* Right: analysis panel */}
                         <aside className="dossier-side">
-                            {a.characteristics && a.characteristics.length > 0 && (
+                            {a.caracteristicas && a.caracteristicas.length > 0 && (
                                 <div className="hud-border dossier-panel">
                                     <span className="dossier-label">Características</span>
                                     <ul className="dossier-tags">
-                                        {a.characteristics.map(c => <li key={c}>{c}</li>)}
+                                        {a.caracteristicas.map(c => <li key={c.id}>{c.nombre}</li>)}
                                     </ul>
                                 </div>
                             )}
