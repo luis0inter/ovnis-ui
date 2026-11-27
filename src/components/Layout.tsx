@@ -5,7 +5,9 @@ import NavBar from './NavBar.tsx'
 export default function Layout() {
   const { user, logout } = useAuth()
   const location = useLocation()
-  const isHome = location.pathname === '/'
+    const isFullWidth =
+        location.pathname === '/' ||
+        location.pathname === '/admin/sightings'
 
   return (
     <div className="app-shell">
@@ -19,7 +21,7 @@ export default function Layout() {
         </div>
       </header>
 
-      <main className={isHome ? 'app-main app-main--full' : 'app-main'}>
+      <main className={isFullWidth ? 'app-main app-main--full' : 'app-main'}>
         <Outlet />
       </main>
     </div>

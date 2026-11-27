@@ -142,7 +142,7 @@
 
 .uh-hero {
   position: relative;
-  min-height: max(760px, min(850px, calc(100svh - 66px)));
+  min-height: calc(100svh - 66px);
   display: flex;
   flex-direction: column;
   justify-content: center;
