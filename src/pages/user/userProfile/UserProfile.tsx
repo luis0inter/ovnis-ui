@@ -50,7 +50,7 @@ export default function UserProfile() {
                 <section className="ov-profile__panel ov-profile__history" aria-labelledby="ov-profile-history-title">
                     <div className="ov-profile__history-head">
                         <h2 id="ov-profile-history-title">Mis avistamientos</h2>
-                        <span>Historial</span>
+                        <Link to="/sightings/new">+ Nuevo avistamiento</Link>
                     </div>
 
                     <div className="ov-profile__rule" />
@@ -80,7 +80,7 @@ export default function UserProfile() {
 
                             <div className="ov-profile__actions">
                                 <Link to={`/sightings/${sighting.id}`}>Ver detalle</Link>
-                                <Link to={`/user/sightings/${sighting.id}/edit`}>Editar</Link>
+                                <Link to={`/sightings/${sighting.id}/edit`}>Editar</Link>
                                 <button
                                     type="button"
 

@@ -3,13 +3,22 @@ import { api, ApiError } from '../api.ts'
 import type { User } from '../../types.ts'
 import { readToken } from './jwt.ts'
 
+export interface AuthFetchOptions {
+  method?: string
+  body?: unknown
+}
+
+// Shape of `authFetch`, exported so services can type an injected parameter without
+// importing the whole AuthContext (keeps the service layer free of React context).
+export type AuthedFetch = <T>(path: string, options?: AuthFetchOptions) => Promise<T>
+
 interface AuthValue {
   user: User | null
   isAuthenticated: boolean
   login: (username: string, password: string) => Promise<void>
   register: (username: string, email: string, password: string) => Promise<void>
   logout: () => void
-  authFetch: <T>(path: string) => Promise<T>
+  authFetch: AuthedFetch
 }
 
 
@@ -56,9 +65,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   // For protected endpoints: adds the token, and logs out if the backend rejects it.
-  async function authFetch<T>(path: string) {
+  async function authFetch<T>(path: string, options?: AuthFetchOptions) {
     try {
-      return await api<T>(path, { token })
+      return await api<T>(path, { ...options, token })
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) logout()
       throw err
