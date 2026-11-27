@@ -10,7 +10,9 @@ import AdminUsers from './pages/admin/AdminUsers.tsx'
 import AdminSettings from './pages/admin/AdminSettings.tsx'
 import SightingDetail from './pages/sightings/SightingDetail.tsx'
 import SightingsPage from './pages/sightings/SightingsPage.tsx'
+import SightingForm from './pages/sightings/SightingForm.tsx'
 import AdminCharacteristicsPage from "./pages/admin/AdminCharacteristicsPage.tsx";
+
 export default function App() {
   return (
     <Routes>
@@ -30,6 +32,8 @@ export default function App() {
           <Route element={<RequireRole role="USER" />}>
             <Route path="profile" element={<UserProfile />} />
             <Route path="settings" element={<UserSettings />} />
+            <Route path="sightings/new" element={<SightingForm />} />
+            <Route path="sightings/:id/edit" element={<SightingForm />} />
           </Route>
 
           <Route element={<RequireRole role="ADMIN" />}>

@@ -3,10 +3,14 @@ import { api, ApiError } from '../api.ts'
 import type { User } from '../../types.ts'
 import { readToken } from './jwt.ts'
 
-interface AuthFetchOptions {
+export interface AuthFetchOptions {
   method?: string
   body?: unknown
 }
+
+// Shape of `authFetch`, exported so services can type an injected parameter without
+// importing the whole AuthContext (keeps the service layer free of React context).
+export type AuthedFetch = <T>(path: string, options?: AuthFetchOptions) => Promise<T>
 
 interface AuthValue {
   user: User | null
@@ -14,7 +18,7 @@ interface AuthValue {
   login: (username: string, password: string) => Promise<void>
   register: (username: string, email: string, password: string) => Promise<void>
   logout: () => void
-  authFetch: <T>(path: string, options?: AuthFetchOptions) => Promise<T>
+  authFetch: AuthedFetch
 }
 
 

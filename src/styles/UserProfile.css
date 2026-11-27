@@ -103,6 +103,8 @@
     font-weight: 700;
 }
 .ov-profile__history-head span { color: var(--ov-accent); font-size: 12px; }
+.ov-profile__history-head a { color: var(--ov-accent); font-size: 12px; text-decoration: none; }
+.ov-profile__history-head a:hover { text-decoration: underline; }
 .ov-profile__history > .ov-profile__rule { margin: 15px 0 9px; }
 .ov-profile__record { padding: 20px 0 8px; border-bottom: 1px solid var(--ov-border); }
 .ov-profile__record:last-child { border-bottom: 0; }

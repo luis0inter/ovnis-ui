@@ -1,5 +1,6 @@
 import { api, ApiError } from '../api.ts'
-import type { Sighting } from '../types'
+import type { AuthedFetch } from '../auth/AuthContext.tsx'
+import type { Sighting, SightingFormInput } from '../types'
 import { MOCK_SIGNTHINGS } from './mockSightings.ts'
 
 const USE_MOCK = true
@@ -22,4 +23,17 @@ export async function getSightingById(id: string): Promise<Sighting | null> {
     if (err instanceof ApiError && err.status === 404) return null
     throw err
   }
+}
+
+// Response only used for its id, to redirect after a successful create/update (SCRUM-32/33).
+export interface CreatedSighting {
+  id: number
+}
+
+export async function createSighting(payload: SightingFormInput, authFetch: AuthedFetch): Promise<CreatedSighting> {
+  return authFetch<CreatedSighting>('/api/sightings', { method: 'POST', body: payload })
+}
+
+export async function updateSighting(id: string, payload: SightingFormInput, authFetch: AuthedFetch): Promise<CreatedSighting> {
+  return authFetch<CreatedSighting>(`/api/sightings/${encodeURIComponent(id)}`, { method: 'PUT', body: payload })
 }
