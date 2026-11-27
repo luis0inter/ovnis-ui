@@ -40,6 +40,8 @@ export default function SightingForm() {
     const [region, setRegion] = useState('')
     const [fechaHora, setFechaHora] = useState('')
     const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
+    const [fotoUrl, setFotoUrl] = useState('')
+    const [photoFailed, setPhotoFailed] = useState(false)
 
     const [characteristics, setCharacteristics] = useState<CharacteristicsState>({ status: 'loading' })
     const [prefillNotice, setPrefillNotice] = useState('')
@@ -76,6 +78,7 @@ export default function SightingForm() {
                 setRegion(sighting.region ?? '')
                 if (sighting.fechaHora) setFechaHora(toDatetimeLocalValue(sighting.fechaHora))
                 setSelectedIds(new Set(sighting.caracteristicas.map(c => c.id)))
+                setFotoUrl(sighting.fotoUrl ?? '')
             })
             .catch((err: Error) => {
                 if (!cancelled) setPrefillNotice(`No se pudieron cargar los datos existentes: ${err.message}`)
@@ -127,6 +130,8 @@ export default function SightingForm() {
             // LocalDateTime deserializer expects seconds.
             fechaHora: fechaHora.length === 16 ? `${fechaHora}:00` : fechaHora,
             caracteristicasIds: Array.from(selectedIds),
+            // HU-005, criterio 1: la fotografía es opcional — solo se envía si el usuario puso una.
+            fotoUrl: fotoUrl.trim() || undefined,
         }
 
         try {
@@ -202,6 +207,27 @@ export default function SightingForm() {
                         max={maxDate}
                         onChange={e => setFechaHora(e.target.value)}
                     />
+                </div>
+
+                <div className="sf-field">
+                    <label className="sf-label" htmlFor="sf-foto">URL de la fotografía (opcional)</label>
+                    <input
+                        className="sf-input"
+                        id="sf-foto"
+                        type="url"
+                        placeholder="https://..."
+                        value={fotoUrl}
+                        onChange={e => { setFotoUrl(e.target.value); setPhotoFailed(false) }}
+                    />
+                    {fotoUrl.trim() && (
+                        photoFailed ? (
+                            <p className="sf-hint">No se pudo cargar la vista previa de esa URL.</p>
+                        ) : (
+                            <div className="sf-photo-preview">
+                                <img src={fotoUrl.trim()} alt="Vista previa de la fotografía" onError={() => setPhotoFailed(true)} />
+                            </div>
+                        )
+                    )}
                 </div>
 
                 <div className="sf-field">
