@@ -11,6 +11,7 @@ import AdminSettings from './pages/admin/AdminSettings.tsx'
 import SightingDetail from './pages/sightings/SightingDetail.tsx'
 import SightingsPage from './pages/sightings/SightingsPage.tsx'
 import SightingForm from './pages/sightings/SightingForm.tsx'
+import AdminCharacteristicsPage from "./pages/admin/AdminCharacteristicsPage.tsx";
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="admin/users" element={<AdminUsers />} />
             <Route path="admin/settings" element={<AdminSettings />} />
             <Route path="admin/sightings" element={<SightingsPage />} />
+            <Route path="admin/characteristics" element={<AdminCharacteristicsPage />} />
           </Route>
         </Route>
       </Route>

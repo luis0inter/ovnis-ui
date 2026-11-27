@@ -1,0 +1,70 @@
+.admin-characteristics {
+    color: #e5e7eb;
+}
+
+.admin-characteristics table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+}
+
+.admin-characteristics th,
+.admin-characteristics td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #263238;
+}
+
+.admin-characteristics th {
+    color: #94a3b8;
+}
+
+.characteristic-edit {
+    margin-top: 24px;
+    padding: 24px;
+    background: #0d1519;
+    border: 1px solid #263238;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.characteristic-edit input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    background: #080c0f;
+    color: #e5e7eb;
+    border: 1px solid #374151;
+    border-radius: 8px;
+}
+
+.characteristic-edit input:focus {
+    outline: 1px solid #67e8f9;
+}
+
+.characteristic-edit button {
+    align-self: flex-end;
+}
+
+.characteristic-success {
+    color: #4ade80;
+    padding: 12px;
+    border: 1px solid #166534;
+    background: #102419;
+    border-radius: 8px;
+}
+
+.characteristic-error {
+    color: #f87171;
+    padding: 12px;
+    border: 1px solid #991b1b;
+    background: #291416;
+    border-radius: 8px;
+}
+
+.admin-characteristics button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

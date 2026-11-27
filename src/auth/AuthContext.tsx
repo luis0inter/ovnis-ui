@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   // For protected endpoints: adds the token, and logs out if the backend rejects it.
-  async function authFetch<T>(path: string, options?: AuthFetchOptions) {
+  async function authFetch<T>(path: string, options: AuthFetchOptions = {}) {
     try {
       return await api<T>(path, { ...options, token })
     } catch (err) {
