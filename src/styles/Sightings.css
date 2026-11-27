@@ -1,3 +1,48 @@
+.uh-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+.uh-filter {
+  display: grid;
+  gap: 0.35rem;
+}
+.uh-filter span {
+  color: var(--uh-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.uh-filter select {
+  min-width: 160px;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--uh-border);
+  border-radius: 6px;
+  background: #081216;
+  color: var(--uh-text);
+  font: inherit;
+  font-size: 0.78rem;
+}
+.uh-filter select:focus-visible {
+  outline: 2px solid var(--uh-accent);
+  outline-offset: 1px;
+}
+.uh-filter-clear {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--uh-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--uh-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.uh-filter-clear:hover { border-color: var(--uh-accent); color: var(--uh-accent); }
+
 .uh-sightings-status {
   padding: 2.5rem 0;
   color: var(--uh-muted);

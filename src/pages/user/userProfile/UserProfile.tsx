@@ -67,7 +67,7 @@ export default function UserProfile() {
                             <div className="ov-profile__record-top">
                                 <div className="ov-profile__record-text">
                                     <h3>{sighting.title ?? 'Registro de avistamiento'}</h3>
-                                    <p>{formatDate(sighting.date)} · {sighting.location ?? 'Ubicación no disponible'}</p>
+                                    <p>{formatDate(sighting.fechaHora ?? undefined)} · {sighting.ciudad ?? 'Ubicación no disponible'}</p>
                                 </div>
                                 <Link
                                     to={`/sightings/${sighting.id}`}
