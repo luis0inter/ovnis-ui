@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router'
 import { Calendar, MapPin } from 'lucide-react'
 import type {Sighting} from  '../../types.ts'
 import {getSightingById} from "../../services/sightnings.ts";
+import { useAuth } from '../../auth/AuthContext.tsx'
 import "../../styles/SightingDetail.css"
 
 type State =
@@ -26,6 +27,7 @@ function formatLocation(a: { lugar: string | null; ciudad: string | null; region
 
 export default function SightingDetail() {
     const { id } = useParams()
+    const { user } = useAuth()
     const [state, setState] = useState<State>({ status: 'loading' })
     const [attempt, setAttempt] = useState(0)
 
@@ -43,7 +45,16 @@ export default function SightingDetail() {
         <section className="dossier">
             <div className="dossier-top">
                 <Link to={LIST_ROUTE} className="dossier-back">← BACK TO SIGHTINGS</Link>
-                <span className="dossier-tag">CLASSIFIED INVESTIGATIVE DOSSIER // DECLASSIFIED ARCHIVE</span>
+                <div className="dossier-top-right">
+                    <span className="dossier-tag">CLASSIFIED INVESTIGATIVE DOSSIER // DECLASSIFIED ARCHIVE</span>
+                    {/* HU-036 (SCRUM-58/59): un visitante sin sesión necesita una forma de
+                        llegar a login/registro desde el detalle público. */}
+                    {user ? (
+                        <Link to="/profile" className="dossier-auth">MI PERFIL</Link>
+                    ) : (
+                        <Link to="/login" className="dossier-auth">INICIAR SESIÓN</Link>
+                    )}
+                </div>
             </div>
 
             {state.status === 'loading' && <p className="dossier-status">RETRIEVING CASE FILE…</p>}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Calendar, MapPin } from 'lucide-react'
+import { Calendar, LogOut, MapPin, UserRound } from 'lucide-react'
 import { Link } from 'react-router'
 import type { Sighting } from '../../types.ts'
 import { getSightings } from '../../services/sightnings.ts'
@@ -39,7 +39,7 @@ function uniqueSorted(values: Array<string | null>): string[] {
 export default function SightingsPage() {
     const [state, setState] = useState<ListState>({ status: 'loading' })
     const [attempt, setAttempt] = useState(0);
-    const {user} = useAuth();
+    const {user, logout} = useAuth();
 
     // HU-014 (SCRUM-63/64): el backend hace match exacto por ciudad/región, así que las
     // opciones del selector salen de la primera carga sin filtrar (y no se recalculan
@@ -69,6 +69,35 @@ export default function SightingsPage() {
     return (
         <>
             <div className="user-home">
+                {/* HU-036 (SCRUM-58/59): un visitante sin sesión que llega aquí directamente
+                    necesita una forma de navegar a login/registro; antes no existía ninguna. */}
+                <header className="uh-header">
+                    <Link className="uh-brand" to="/sightings" aria-label="OVNIS, inicio">
+                        <span className="uh-logo" aria-hidden="true"><span/></span>
+                        <span className="uh-brand-name">OVNIS</span>
+                    </Link>
+
+                    <div className="uh-header-actions">
+                        {user ? (
+                            <>
+                                <Link className="uh-icon-link" to="/profile" aria-label="Tu perfil" title="Tu perfil">
+                                    <UserRound size={16} aria-hidden="true"/>
+                                </Link>
+                                <button className="uh-submit" type="button" onClick={logout}>
+                                    <LogOut size={14} aria-hidden="true"/>
+                                    <span>Cerrar sesión</span>
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link className="uh-icon-link" to="/register">Crear cuenta</Link>
+                                <span className="uh-divider" aria-hidden="true"/>
+                                <Link className="uh-submit" to="/login">Iniciar sesión</Link>
+                            </>
+                        )}
+                    </div>
+                </header>
+
                 <main>
                     <section className="uh-hero" aria-labelledby="uh-title">
                         <div className="uh-sky" aria-hidden="true">
@@ -89,6 +118,12 @@ export default function SightingsPage() {
                                     className="uh-secondary-action"
                                 >
                                     Administrar características
+                                </Link>
+                            )}
+
+                            {!user && (
+                                <Link to="/sightings/new" className="uh-secondary-action">
+                                    Publicar un avistamiento
                                 </Link>
                             )}
 
