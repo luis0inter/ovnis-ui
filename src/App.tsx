@@ -16,17 +16,18 @@ import AdminCharacteristicsPage from "./pages/admin/AdminCharacteristicsPage.tsx
 export default function App() {
   return (
     <Routes>
-      {/* Público: visitantes y usuarios registrados por igual (HU-009, criterio 3) */}
-      <Route path="/sightings" element={<SightingsPage />} />
-      <Route path="/sightings/:id" element={<SightingDetail />} />
-
       <Route element={<PublicOnly />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Route>
+      <Route element={<Layout />}>
+        {/* Público: visitantes y usuarios registrados por igual (HU-009, criterio 3) */}
+        <Route path="/sightings" element={<SightingsPage />} />
+        <Route path="/sightings/:id" element={<SightingDetail />} />
 
-      <Route element={<RequireAuth />}>
-        <Route element={<Layout />}>
+
+
+        <Route element={<RequireAuth />}>
           <Route index element={<UserHome />} />
 
           <Route element={<RequireRole role="USER" />}>
@@ -43,9 +44,9 @@ export default function App() {
             <Route path="admin/characteristics" element={<AdminCharacteristicsPage />} />
           </Route>
         </Route>
-      </Route>
 
-      <Route path="*" element={<Redirect />} />
+        <Route path="*" element={<Redirect />} />
+      </Route>
     </Routes>
   )
 }

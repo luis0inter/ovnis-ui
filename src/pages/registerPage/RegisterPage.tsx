@@ -66,7 +66,6 @@ export default function RegisterPage() {
           <span className="sep">/</span>
           <span>RED DE OBSERVACIÓN</span>
         </div>
-        <Link className="lg-back" to="/">Volver al inicio</Link>
       </header>
 
       <main className="lg-main">

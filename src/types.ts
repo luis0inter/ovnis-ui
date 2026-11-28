@@ -35,7 +35,4 @@ export interface SightingFormInput {
     region: string
     fechaHora: string
     caracteristicasIds: number[]
-    // HU-005 (SCRUM-26/27): optional — the backend has no file upload, `fotoUrl` is
-    // just a URL string to an already-hosted image.
-    fotoUrl?: string
 }
