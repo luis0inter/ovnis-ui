@@ -15,12 +15,19 @@ export const adminLinks = [
   { to: '/admin/settings', label: 'Ajustes' },
 ]
 
+export const publicLinks = [
+  { to: '/', label: 'Inicio' },
+  { to: '/sightings', label: 'Avistamientos' },
+]
+
 export default function NavBar() {
   const { user } = useAuth()
 
-  if (!user) return null
-
-  const links = user.role === 'ADMIN' ? adminLinks : userLinks
+  const links = !user
+    ? publicLinks
+    : user.role === 'ADMIN'
+      ? adminLinks
+      : userLinks
 
   return (
     <nav className="uh-nav" aria-label="Navegación principal">
